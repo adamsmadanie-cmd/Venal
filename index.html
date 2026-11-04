@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VÉNAL | Informations c'est ici</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous"></script>
+    <style>
+        :root {
+            --bg-main: #fcfcfc;
+            --bg-card: #ffffff;
+            --black-deep: #050505;
+            --black-soft: #121212;
+            --accent-red: #e63946;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #94a3b8;
+            --border-light: #e2e8f0;
+            --border-dark: #0f172a;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+            --shadow-md: 0 12px 24px -6px rgba(0,0,0,0.06);
+            --shadow-sharp: 5px 5px 0px #050505;
+            --shadow-sharp-hover: 8px 8px 0px #050505;
+            --font-sans: 'Plus Jakarta Sans', sans-serif;
+            --font-logo: 'Cinzel', serif;
+            --font-head: 'Syne', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* Cadres Ultra-Modernes 2D Animer */
+        .framed-box {
+            background: var(--bg-card);
+            border: 1.5px solid var(--black-deep);
+            box-shadow: var(--shadow-sharp);
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .framed-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+            transition: left 0.7s ease;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .framed-box:hover::before {
+            left: 100%;
+        }
+
+        .framed-box:hover {
+            box-shadow: var(--shadow-sharp-hover);
+            transform: translateY(-3px);
+        }
+
+        /* 2D Scanning Border FX */
+        .scan-frame {
+            position: relative;
+            border: 1px solid var(--border-light);
+            background: #fff;
+            border-radius: 6px;
+        }
+
+        .scan-frame::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border: 1px solid transparent;
+            border-radius: 6px;
+            background: linear-gradient(90deg, transparent, var(--black-deep), transparent) border-box;
+            -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: destination-out;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .scan-frame:hover::after {
+            opacity: 1;
+            animation: borderScan 2s infinite linear;
+        }
+
+        @keyframes borderScan {
+            0% { clip-path: inset(0 0 95% 0); }
+            25% { clip-path: inset(0 95% 0 0); }
+            50% { clip-path: inset(95% 0 0 0); }
+            75% { clip-path: inset(0 0 0 95%); }
+            100% { clip-path: inset(0 0 95% 0); }
+        }
+
+        /* Modern Sleek Buttons */
+        .btn-black {
+            background-color: var(--black-deep);
+            color: #ffffff;
+            border: 1.5px solid var(--black-deep);
+            padding: 12px 26px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            border-radius: 6px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn-black::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: #262626;
+            opacity: 0;
+            z-index: -1;
+            transition: opacity 0.2s ease;
+        }
+
+        .btn-black:hover::after {
+            opacity: 1;
+        }
+
+        .btn-black:active {
+            transform: scale(0.97);
+        }
+
+        .btn-outline-dark {
+            background: transparent;
+            color: var(--black-deep);
+            border: 1.5px solid var(--black-deep);
+            padding: 11px 24px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            border-radius: 6px;
+            cursor: pointer;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-outline-dark:hover {
+            background: var(--black-deep);
+            color: #ffffff;
+        }
+
+        /* Navigation Bar & Header 3D */
+        header {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1.5px solid var(--black-deep);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .top-subhead {
+            background: var(--black-deep);
+            color: #fff;
+            font-size: 0.72rem;
+            padding: 6px 24px;
+            display: flex;
+            justify-content: space-between;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .header-nav {
+            max-width: 1350px;
+            margin: 0 auto;
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Logo 3D Ultra VÉNAL */
+        .logo-box {
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            perspective: 600px;
+        }
+
+        .logo-3d-text {
+            font-family: var(--font-logo);
+            font-size: 2.8rem;
+            font-weight: 900;
+            color: var(--black-deep);
+            letter-spacing: 4px;
+            line-height: 0.9;
+            transform-style: preserve-3d;
+            transform: rotateX(8deg) rotateY(-6deg);
+            text-shadow: 
+                1px 1px 0px #333,
+                2px 2px 0px #444,
+                3px 3px 0px #050505,
+                5px 8px 15px rgba(0,0,0,0.15);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .logo-box:hover .logo-3d-text {
+            transform: rotateX(0deg) rotateY(0deg) scale(1.03);
+            text-shadow: 
+                1px 1px 0px #000,
+                2px 2px 0px #000,
+                4px 4px 0px #000,
+                7px 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .logo-tagline {
+            font-family: var(--font-sans);
+            font-size: 0.68rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #ffffff;
+            background: var(--black-deep);
+            padding: 3px 8px;
+            margin-top: 6px;
+            display: inline-block;
+            border-radius: 3px;
+        }
+
+        .nav-items {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-items a {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 700;
+            font-size: 0.88rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            padding: 8px 0;
+        }
+
+        .nav-items a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0%;
+            height: 2.5px;
+            background: var(--black-deep);
+            transition: width 0.25s ease;
+        }
+
+        .nav-items a:hover::after,
+        .nav-items a.active::after {
+            width: 100%;
+        }
+
+        /* Container Main */
+        .container {
+            max-width: 1350px;
+            margin: 35px auto;
+            padding: 0 24px;
+        }
+
+        /* Ticker Direct */
+        .news-ticker {
+            display: flex;
+            align-items: center;
+            background: #fff;
+            border: 1.5px solid var(--black-deep);
+            border-radius: 6px;
+            padding: 8px 16px;
+            margin-bottom: 35px;
+            box-shadow: 3px 3px 0px var(--black-deep);
+        }
+
+        .ticker-badge {
+            background: var(--accent-red);
+            color: #fff;
+            font-size: 0.7rem;
+            font-weight: 800;
+            padding: 4px 10px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-right: 15px;
+            white-space: nowrap;
+        }
+
+        .ticker-text {
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        /* Sections */
+        .page-section {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Grid Layout */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 2.3fr 1fr;
+            gap: 35px;
+        }
+
+        @media (max-width: 992px) {
+            .main-layout { grid-template-columns: 1fr; }
+            .header-nav { flex-direction: column; gap: 20px; }
+        }
+
+        /* Filters */
+        .filter-bar {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 30px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+        }
+
+        .filter-pill {
+            background: #fff;
+            border: 1.5px solid var(--border-light);
+            padding: 8px 18px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            border-radius: 30px;
+            cursor: pointer;
+            white-space: nowrap;
+            color: var(--text-secondary);
+        }
+
+        .filter-pill.active, .filter-pill:hover {
+            background: var(--black-deep);
+            color: #fff;
+            border-color: var(--black-deep);
+        }
+
+        /* Article Card Modern */
+        .article-card {
+            margin-bottom: 35px;
+        }
+
+        .article-cover {
+            width: 100%;
+            height: 320px;
+            object-fit: cover;
+            border-bottom: 1.5px solid var(--black-deep);
+        }
+
+        .article-content {
+            padding: 28px;
+        }
+
+        .category-tag {
+            font-size: 0.72rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: var(--accent-red);
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
+        .article-h1 {
+            font-family: var(--font-head);
+            font-size: 1.9rem;
+            font-weight: 800;
+            line-height: 1.25;
+            margin-bottom: 15px;
+            color: var(--black-deep);
+            cursor: pointer;
+        }
+
+        .article-h1:hover {
+            opacity: 0.85;
+        }
+
+        .meta-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            padding-bottom: 16px;
+            margin-bottom: 16px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .avatar-circle {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1.5px solid var(--black-deep);
+        }
+
+        .article-text {
+            font-size: 1rem;
+            color: #334155;
+            line-height: 1.7;
+            margin-bottom: 22px;
+        }
+
+        .action-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .action-btn {
+            background: none;
+            border: none;
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            border-radius: 4px;
+        }
+
+        .action-btn:hover {
+            background: #f1f5f9;
+            color: var(--black-deep);
+        }
+
+        /* Profiles Directory */
+        .profiles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+            gap: 28px;
+        }
+
+        .profile-card-modern {
+            text-align: center;
+            padding: 30px 24px;
+        }
+
+        .profile-avatar-big {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--black-deep);
+            margin: 0 auto 16px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+
+        .press-card-badge {
+            background: #f8fafc;
+            border: 1px dashed var(--black-deep);
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            margin: 15px 0;
+            font-weight: 600;
+        }
+
+        /* Publishing Form */
+        .publish-studio {
+            background: #fff;
+            padding: 40px;
+            border: 2px solid var(--black-deep);
+            box-shadow: 8px 8px 0px var(--black-deep);
+            border-radius: 8px;
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 800;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 8px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1.5px solid var(--border-dark);
+            border-radius: 6px;
+            font-family: var(--font-sans);
+            font-size: 0.95rem;
+            outline: none;
+            background: #fafafa;
+        }
+
+        .form-input:focus {
+            background: #ffffff;
+            border-color: var(--black-deep);
+            box-shadow: 0 0 0 3px rgba(5,5,5,0.1);
+        }
+
+        textarea.form-input {
+            min-height: 200px;
+            resize: vertical;
+        }
+
+        /* Modal Auth */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-box {
+            background: #fff;
+            width: 100%;
+            max-width: 460px;
+            padding: 35px;
+            border: 2px solid var(--black-deep);
+            box-shadow: 10px 10px 0px var(--black-deep);
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            background: none;
+            border: none;
+            font-size: 1.4rem;
+            cursor: pointer;
+        }
+
+        /* Toast */
+        .toast-notif {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--black-deep);
+            color: #fff;
+            padding: 14px 28px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            display: none;
+            z-index: 2000;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header>
+        <div class="top-subhead">
+            <div><i class="far fa-clock"></i> <span id="live-date">Chargement...</span> | Édition Nationale VÉNAL</div>
+            <div><i class="fas fa-certificate"></i> Réseau Journalistique Certifié</div>
+        </div>
+        <div class="header-nav">
+            <!-- 3D Logo VÉNAL -->
+            <a href="#" class="logo-box" onclick="showSection('feed')">
+                <div class="logo-3d-text">VÉNAL</div>
+                <div class="logo-tagline">INFORMATIONS C'EST ICI</div>
+            </a>
+
+            <!-- Navigation Links -->
+            <ul class="nav-items">
+                <li><a href="#" id="nav-feed" class="active" onclick="showSection('feed')">Fil d'Actualités</a></li>
+                <li><a href="#" id="nav-profiles" onclick="showSection('profiles')">Répertoire Journalistes</a></li>
+                <li><a href="#" id="nav-editor" onclick="showSection('editor')">Poste de Rédaction</a></li>
+            </ul>
+
+            <!-- Auth Controls -->
+            <div id="user-control-panel">
+                <!-- Injected dynamically via JS -->
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Live Ticker Bar -->
+        <div class="news-ticker">
+            <span class="ticker-badge">En Direct</span>
+            <div class="ticker-text">
+                VÉNAL : L'information indépendante et certifiée. Découvrez les derniers grands reportages publiés par nos membres.
+            </div>
+        </div>
+
+        <!-- SECTION 1: FIL D'ACTUALITÉS -->
+        <section id="section-feed" class="page-section active">
+            <div class="main-layout">
+                <div>
+                    <!-- Category Filters -->
+                    <div class="filter-bar">
+                        <button class="filter-pill active" onclick="filterArticles('all', this)">Tous les Articles</button>
+                        <button class="filter-pill" onclick="filterArticles('Politique', this)">Politique</button>
+                        <button class="filter-pill" onclick="filterArticles('Tech', this)">Technologie</button>
+                        <button class="filter-pill" onclick="filterArticles('Économie', this)">Économie</button>
+                        <button class="filter-pill" onclick="filterArticles('Reportage', this)">Grand Reportage</button>
+                    </div>
+
+                    <!-- Articles Stream -->
+                    <div id="articles-stream">
+                        <!-- Dynamic Articles Injected Here -->
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div>
+                    <div class="framed-box" style="padding: 24px; margin-bottom: 25px;">
+                        <h3 style="font-family: var(--font-head); font-size: 1.1rem; text-transform: uppercase; margin-bottom: 12px; font-weight: 800;">
+                            Édito de la Rédaction
+                        </h3>
+                        <p style="font-size: 0.92rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 15px;">
+                            "Sur VÉNAL, la rigueur de l'information s'associe à la liberté d'expression. Tous nos auteurs sont des professionnels accrédités."
+                        </p>
+                        <div style="font-size: 0.8rem; font-weight: 800; text-align: right; text-transform: uppercase;">— Le Comité Éditorial</div>
+                    </div>
+
+                    <div class="scan-frame" style="padding: 24px; margin-bottom: 25px;">
+                        <h4 style="font-family: var(--font-head); text-transform: uppercase; font-size: 1rem; margin-bottom: 15px; border-bottom: 1.5px solid var(--black-deep); padding-bottom: 6px;">
+                            Journalistes à la une
+                        </h4>
+                        <div id="featured-journalists-list">
+                            <!-- Injected JS -->
+                        </div>
+                    </div>
+
+                    <div style="background: var(--black-deep); color: #fff; padding: 26px; border-radius: 8px; box-shadow: var(--shadow-sharp);">
+                        <h4 style="font-family: var(--font-head); font-size: 1.1rem; text-transform: uppercase; margin-bottom: 10px; color: #fff;">
+                            Accréditation Pro
+                        </h4>
+                        <p style="font-size: 0.85rem; color: #94a3b8; margin-bottom: 18px;">
+                            Vous êtes reporter ou rédacteur ? Obtenez votre badge certifié VÉNAL.
+                        </p>
+                        <button class="btn-black" style="background: #fff; color: #050505; width: 100%;" onclick="openAuthModal()">
+                            Rejoindre la Rédaction
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: RÉPERTOIRE DES PROFILS -->
+        <section id="section-profiles" class="page-section">
+            <div style="border-bottom: 2px solid var(--black-deep); padding-bottom: 10px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: flex-end;">
+                <h2 style="font-family: var(--font-head); font-size: 1.8rem; text-transform: uppercase;">Journalistes & Pros Certifiés</h2>
+                <span style="font-weight: 600; color: var(--text-muted);">Membres actifs du réseau</span>
+            </div>
+
+            <div class="profiles-grid" id="profiles-directory">
+                <!-- Profiles Dynamic Injection -->
+            </div>
+        </section>
+
+        <!-- SECTION 3: POSTE DE RÉDACTION -->
+        <section id="section-editor" class="page-section">
+            <div style="border-bottom: 2px solid var(--black-deep); padding-bottom: 10px; margin-bottom: 30px;">
+                <h2 style="font-family: var(--font-head); font-size: 1.8rem; text-transform: uppercase;">Poste de Rédaction Journalistique</h2>
+            </div>
+
+            <div class="publish-studio">
+                <div id="editor-access-warning" style="display:none; margin-bottom:20px;">
+                    <div style="background:#fef2f2; border:1.5px solid var(--accent-red); padding:16px; color:var(--accent-red); font-weight:600; border-radius:6px; font-size:0.9rem;">
+                        <i class="fas fa-lock"></i> Vous devez être connecté avec un compte <strong>Journaliste / Éditeur</strong> pour publier.
+                    </div>
+                </div>
+
+                <form id="article-publish-form" onsubmit="handlePublishArticle(event)">
+                    <div class="form-group">
+                        <label>Titre de l'Article</label>
+                        <input type="text" id="post-title" class="form-input" placeholder="Titre percutant et informatif..." required>
+                    </div>
+
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
+                        <div class="form-group">
+                            <label>Catégorie</label>
+                            <select id="post-category" class="form-input" required>
+                                <option value="Politique">Politique</option>
+                                <option value="Tech">Technologie & Innovation</option>
+                                <option value="Économie">Économie & Marchés</option>
+                                <option value="Reportage">Grand Reportage</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>URL de l'Image d'Illustration</label>
+                            <input type="url" id="post-image" class="form-input" placeholder="https://images.unsplash.com/...">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Contenu de la Rédaction</label>
+                        <textarea id="post-content" class="form-input" placeholder="Rédigez l'intégralité de votre reportage..." required></textarea>
+                    </div>
+
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:30px;">
+                        <span style="font-size:0.85rem; color:var(--text-muted); font-weight:600;">
+                            <i class="fas fa-shield-alt"></i> Publication sous votre identité certifiée
+                        </span>
+                        <button type="submit" class="btn-black" id="submit-article-btn">
+                            <i class="fas fa-paper-plane"></i> Publier l'Article
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- SECTION 4: EDITEUR DE PROFIL -->
+        <section id="section-my-profile" class="page-section">
+            <div style="border-bottom: 2px solid var(--black-deep); padding-bottom: 10px; margin-bottom: 30px;">
+                <h2 style="font-family: var(--font-head); font-size: 1.8rem; text-transform: uppercase;">Paramètres du Profil Pro</h2>
+            </div>
+
+            <div class="publish-studio">
+                <form id="profile-edit-form" onsubmit="handleSaveProfile(event)">
+                    <div style="display:flex; gap:20px; align-items:center; margin-bottom:30px; padding-bottom:20px; border-bottom:1px solid var(--border-light);">
+                        <img id="edit-avatar-preview" src="" class="profile-avatar-big" style="margin:0;">
+                        <div>
+                            <h3 id="edit-name-display" style="font-family:var(--font-head); font-size:1.4rem;">Nom Prénom</h3>
+                            <span id="edit-role-display" style="background:var(--black-deep); color:#fff; font-size:0.7rem; font-weight:800; padding:3px 8px; border-radius:3px; text-transform:uppercase;">ROLE</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Nom Complet</label>
+                        <input type="text" id="edit-name" class="form-input" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Organisme de Presse / Médias</label>
+                        <input type="text" id="edit-outlet" class="form-input" placeholder="ex: Agence France-Presse, Indépendant...">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Numéro de Carte de Presse</label>
+                        <input type="text" id="edit-press-id" class="form-input" placeholder="ex: CCIJP-99212">
+                    </div>
+
+                    <div class="form-group">
+                        <label>URL Photo de Profil</label>
+                        <input type="url" id="edit-avatar" class="form-input">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Biographie Professionnelle</label>
+                        <textarea id="edit-bio" class="form-input" style="min-height:120px;"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-black" style="width:100%;">
+                        Mettre à Jour le Profil
+                    </button>
+                </form>
+            </div>
+        </section>
+    </div>
+
+    <!-- MODAL AUTHENTIFICATION -->
+    <div class="modal-overlay" id="auth-modal">
+        <div class="modal-box">
+            <button class="modal-close-btn" onclick="closeAuthModal()">&times;</button>
+            <h3 style="font-family:var(--font-head); font-size:1.4rem; text-transform:uppercase; margin-bottom:20px; border-bottom:2px solid var(--black-deep); padding-bottom:8px;">
+                Espace Rédaction VÉNAL
+            </h3>
+
+            <div style="display:flex; gap:10px; margin-bottom:22px;">
+                <button class="btn-black" id="tab-login" style="flex:1;" onclick="switchAuthTab('login')">Connexion</button>
+                <button class="btn-outline-dark" id="tab-register" style="flex:1;" onclick="switchAuthTab('register')">Inscription</button>
+            </div>
+
+            <form id="form-login" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label>Adresse Email</label>
+                    <input type="email" id="login-email" class="form-input" placeholder="journaliste@venal.fr" required>
+                </div>
+                <div class="form-group">
+                    <label>Mot de passe</label>
+                    <input type="password" id="login-password" class="form-input" required>
+                </div>
+                <button type="submit" class="btn-black" style="width:100%; margin-top:10px;">Se Connecter</button>
+            </form>
+
+            <form id="form-register" onsubmit="handleRegister(event)" style="display:none;">
+                <div class="form-group">
+                    <label>Nom complet</label>
+                    <input type="text" id="reg-name" class="form-input" placeholder="Alexandre Dumas" required>
+                </div>
+                <div class="form-group">
+                    <label>Adresse Email</label>
+                    <input type="email" id="reg-email" class="form-input" placeholder="alexandre@venal.fr" required>
+                </div>
+                <div class="form-group">
+                    <label>Rôle</label>
+                    <select id="reg-role" class="form-input">
+                        <option value="Journaliste">Journaliste / Reporter</option>
+                        <option value="Éditeur">Éditeur en Chef</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Organisme Média</label>
+                    <input type="text" id="reg-outlet" class="form-input" placeholder="VÉNAL Press">
+                </div>
+                <div class="form-group">
+                    <label>Mot de passe</label>
+                    <input type="password" id="reg-password" class="form-input" required>
+                </div>
+                <button type="submit" class="btn-black" style="width:100%; margin-top:10px;">Créer mon Compte Pro</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast-notif">Action effectuée.</div>
+
+    <!-- LOGIQUE JS -->
+    <script>
+        const INITIAL_PROFILES = [
+            {
+                id: 'u1',
+                name: 'Claire Vance',
+                role: 'Journaliste',
+                outlet: 'VÉNAL Enquêtes',
+                pressId: 'CCIJP-88210',
+                bio: 'Reporter d\'investigation spécialisée en géopolitique et économie internationale.',
+                avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80'
+            },
+            {
+                id: 'u2',
+                name: 'Marc Antoine',
+                role: 'Éditeur',
+                outlet: 'VÉNAL Tech',
+                pressId: 'CCIJP-99112',
+                bio: 'Responsable de la rubrique innovation et transformation numérique.',
+                avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop&q=80'
+            }
+        ];
+
+        const INITIAL_ARTICLES = [
+            {
+                id: 'art-1',
+                authorId: 'u1',
+                authorName: 'Claire Vance',
+                authorOutlet: 'VÉNAL Enquêtes',
+                authorAvatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80',
+                title: 'Informations c\'est ici : Les nouveaux enjeux maritimes mondiaux',
+                category: 'Reportage',
+                content: 'Alors que les voies maritimes traditionnelles subissent de nouvelles tensions stratégiques, l’émergence de passages nordiques redistribue les cartes du commerce global.',
+                image: 'https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=800&auto=format&fit=crop&q=80',
+                date: '04 Nov 2026',
+                likes: 89
+            }
+        ];
+
+        let dbProfiles = JSON.parse(localStorage.getItem('venal_profiles')) || INITIAL_PROFILES;
+        let dbArticles = JSON.parse(localStorage.getItem('venal_articles')) || INITIAL_ARTICLES;
+        let currentUser = JSON.parse(localStorage.getItem('venal_user')) || null;
+
+        window.onload = function() {
+            document.getElementById('live-date').textContent = new Date().toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            renderAuthPanel();
+            renderArticles('all');
+            renderProfiles();
+            renderFeatured();
+        };
+
+        function saveData() {
+            localStorage.setItem('venal_profiles', JSON.stringify(dbProfiles));
+            localStorage.setItem('venal_articles', JSON.stringify(dbArticles));
+            localStorage.setItem('venal_user', JSON.stringify(currentUser));
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.style.display = 'block';
+            setTimeout(() => { toast.style.display = 'none'; }, 3000);
+        }
+
+        function showSection(id) {
+            document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-items a').forEach(a => a.classList.remove('active'));
+
+            document.getElementById(`section-${id}`).classList.add('active');
+            const navBtn = document.getElementById(`nav-${id}`);
+            if(navBtn) navBtn.classList.add('active');
+
+            if(id === 'editor') checkEditorAccess();
+            if(id === 'my-profile' && currentUser) loadProfileForm();
+        }
+
+        function renderAuthPanel() {
+            const panel = document.getElementById('user-control-panel');
+            if(currentUser) {
+                panel.innerHTML = `
+                    <div style="display:flex; align-items:center; gap:12px;">
+                        <img src="${currentUser.avatar}" class="avatar-circle" style="cursor:pointer;" onclick="showSection('my-profile')">
+                        <button class="btn-outline-dark" style="padding:6px 12px; font-size:0.75rem;" onclick="handleLogout()">Déconnexion</button>
+                    </div>
+                `;
+            } else {
+                panel.innerHTML = `
+                    <button class="btn-black" onclick="openAuthModal()">Espace Pro / Connexion</button>
+                `;
+            }
+        }
+
+        function openAuthModal() { document.getElementById('auth-modal').classList.add('active'); }
+        function closeAuthModal() { document.getElementById('auth-modal').classList.remove('active'); }
+
+        function switchAuthTab(type) {
+            if(type === 'login') {
+                document.getElementById('form-login').style.display = 'block';
+                document.getElementById('form-register').style.display = 'none';
+                document.getElementById('tab-login').className = 'btn-black';
+                document.getElementById('tab-register').className = 'btn-outline-dark';
+            } else {
+                document.getElementById('form-login').style.display = 'none';
+                document.getElementById('form-register').style.display = 'block';
+                document.getElementById('tab-login').className = 'btn-outline-dark';
+                document.getElementById('tab-register').className = 'btn-black';
+            }
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            currentUser = dbProfiles.find(p => p.email === email) || {
+                id: 'usr-' + Date.now(),
+                name: email.split('@')[0],
+                role: 'Journaliste',
+                outlet: 'VÉNAL Press',
+                pressId: 'CCIJP-' + Math.floor(10000 + Math.random() * 90000),
+                bio: 'Membre certifié.',
+                avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=300'
+            };
+            saveData();
+            renderAuthPanel();
+            closeAuthModal();
+            showToast(`Bienvenue ${currentUser.name}`);
+        }
+
+        function handleRegister(e) {
+            e.preventDefault();
+            const newU = {
+                id: 'usr-' + Date.now(),
+                name: document.getElementById('reg-name').value,
+                email: document.getElementById('reg-email').value,
+                role: document.getElementById('reg-role').value,
+                outlet: document.getElementById('reg-outlet').value || 'VÉNAL Press',
+                pressId: 'CCIJP-' + Math.floor(10000 + Math.random() * 90000),
+                bio: 'Journaliste accrédité VÉNAL.',
+                avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=300'
+            };
+            dbProfiles.push(newU);
+            currentUser = newU;
+            saveData();
+            renderAuthPanel();
+            renderProfiles();
+            closeAuthModal();
+            showToast('Compte créé !');
+        }
+
+        function handleLogout() {
+            currentUser = null;
+            saveData();
+            renderAuthPanel();
+            showSection('feed');
+            showToast('Déconnecté.');
+        }
+
+        function renderArticles(cat = 'all') {
+            const stream = document.getElementById('articles-stream');
+            stream.innerHTML = '';
+            const filtered = cat === 'all' ? dbArticles : dbArticles.filter(a => a.category.toLowerCase() === cat.toLowerCase());
+
+            filtered.forEach(art => {
+                const card = document.createElement('article');
+                card.className = 'framed-box article-card';
+                card.innerHTML = `
+                    ${art.image ? `<img src="${art.image}" class="article-cover">` : ''}
+                    <div class="article-content">
+                        <span class="category-tag">${art.category}</span>
+                        <h1 class="article-h1">${art.title}</h1>
+                        <div class="meta-row">
+                            <img src="${art.authorAvatar}" class="avatar-circle">
+                            <div><strong>${art.authorName}</strong> — ${art.authorOutlet}</div>
+                            <div style="margin-left:auto;"><i class="far fa-calendar"></i> ${art.date}</div>
+                        </div>
+                        <p class="article-text">${art.content}</p>
+                        <div class="action-bar">
+                            <button class="action-btn" onclick="likeArticle('${art.id}')">
+                                <i class="far fa-heart"></i> ${art.likes} Recommandations
+                            </button>
+                        </div>
+                    </div>
+                `;
+                stream.appendChild(card);
+            });
+        }
+
+        function filterArticles(cat, btn) {
+            document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderArticles(cat);
+        }
+
+        function likeArticle(id) {
+            const a = dbArticles.find(x => x.id === id);
+            if(a) {
+                a.likes++;
+                saveData();
+                renderArticles();
+                showToast('Article recommandé');
+            }
+        }
+
+        function renderProfiles() {
+            const grid = document.getElementById('profiles-directory');
+            grid.innerHTML = '';
+            dbProfiles.forEach(p => {
+                const c = document.createElement('div');
+                c.className = 'framed-box profile-card-modern';
+                c.innerHTML = `
+                    <img src="${p.avatar}" class="profile-avatar-big">
+                    <h3 style="font-family:var(--font-head); font-size:1.2rem;">${p.name}</h3>
+                    <div style="color:var(--accent-red); font-weight:700; font-size:0.8rem; margin-bottom:8px;">${p.outlet}</div>
+                    <div class="press-card-badge">CARTE PRESSE : ${p.pressId}</div>
+                    <p style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:15px;">${p.bio}</p>
+                    <button class="btn-outline-dark" style="width:100%; font-size:0.75rem;">Voir Certificat</button>
+                `;
+                grid.appendChild(c);
+            });
+        }
+
+        function renderFeatured() {
+            const list = document.getElementById('featured-journalists-list');
+            list.innerHTML = '';
+            dbProfiles.slice(0, 3).forEach(p => {
+                const d = document.createElement('div');
+                d.style.cssText = 'display:flex; align-items:center; gap:10px; margin-bottom:12px;';
+                d.innerHTML = `
+                    <img src="${p.avatar}" class="avatar-circle">
+                    <div>
+                        <div style="font-weight:700; font-size:0.85rem;">${p.name}</div>
+                        <div style="font-size:0.75rem; color:var(--text-muted);">${p.outlet}</div>
+                    </div>
+                `;
+                list.appendChild(d);
+            });
+        }
+
+        function checkEditorAccess() {
+            const warn = document.getElementById('editor-access-warning');
+            const btn = document.getElementById('submit-article-btn');
+            if(!currentUser) {
+                warn.style.display = 'block';
+                btn.disabled = true;
+                btn.style.opacity = '0.5';
+            } else {
+                warn.style.display = 'none';
+                btn.disabled = false;
+                btn.style.opacity = '1';
+            }
+        }
+
+        function handlePublishArticle(e) {
+            e.preventDefault();
+            if(!currentUser) return;
+            const newArt = {
+                id: 'art-' + Date.now(),
+                authorId: currentUser.id,
+                authorName: currentUser.name,
+                authorOutlet: currentUser.outlet,
+                authorAvatar: currentUser.avatar,
+                title: document.getElementById('post-title').value,
+                category: document.getElementById('post-category').value,
+                content: document.getElementById('post-content').value,
+                image: document.getElementById('post-image').value || 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800&auto=format&fit=crop&q=80',
+                date: new Date().toLocaleDateString('fr-FR', { day:'2-digit', month:'short', year:'numeric' }),
+                likes: 0
+            };
+            dbArticles.unshift(newArt);
+            saveData();
+            document.getElementById('article-publish-form').reset();
+            showToast('Article publié !');
+            showSection('feed');
+            renderArticles();
+        }
+
+        function loadProfileForm() {
+            if(!currentUser) return;
+            document.getElementById('edit-name').value = currentUser.name;
+            document.getElementById('edit-outlet').value = currentUser.outlet;
+            document.getElementById('edit-press-id').value = currentUser.pressId;
+            document.getElementById('edit-avatar').value = currentUser.avatar;
+            document.getElementById('edit-bio').value = currentUser.bio;
+            document.getElementById('edit-avatar-preview').src = currentUser.avatar;
+            document.getElementById('edit-name-display').textContent = currentUser.name;
+            document.getElementById('edit-role-display').textContent = currentUser.role;
+        }
+
+        function handleSaveProfile(e) {
+            e.preventDefault();
+            if(!currentUser) return;
+            currentUser.name = document.getElementById('edit-name').value;
+            currentUser.outlet = document.getElementById('edit-outlet').value;
+            currentUser.pressId = document.getElementById('edit-press-id').value;
+            currentUser.avatar = document.getElementById('edit-avatar').value || currentUser.avatar;
+            currentUser.bio = document.getElementById('edit-bio').value;
+
+            const idx = dbProfiles.findIndex(p => p.id === currentUser.id);
+            if(idx !== -1) dbProfiles[idx] = currentUser;
+
+            saveData();
+            renderAuthPanel();
+            renderProfiles();
+            renderFeatured();
+            showToast('Profil mis à jour !');
+        }
+    </script>
+</body>
+</html>
